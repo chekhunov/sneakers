@@ -6989,6 +6989,11 @@ lz-string@^1.4.4:
   resolved "https://registry.yarnpkg.com/lz-string/-/lz-string-1.4.4.tgz#c0d8eaf36059f705796e1e344811cf4c498d3a26"
   integrity sha1-wNjq82BZ9wV5bh40SBHPTEmNOiY=
 
+macro-css@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/macro-css/-/macro-css-1.0.4.tgz#ddd46e6a7b3c47ff946f8ef31107b757c46fc70d"
+  integrity sha512-oRIqDpU3HE/FVWkOO7LWpkEUtBL3LR7GZC4oGSqVaYvx4aipaUfiklMZGf+Lmoi8SiawSgJuxrLiWLcqrP8ewQ==
+
 magic-string@^0.25.0, magic-string@^0.25.7:
   version "0.25.7"
   resolved "https://registry.yarnpkg.com/magic-string/-/magic-string-0.25.7.tgz#3f497d6fd34c669c6798dcb821f2ef31f5445051"

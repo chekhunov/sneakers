@@ -1,0 +1,29 @@
+@import "../../node_modules/macro-css/index.min.css";
+
+body {
+  margin: 0;
+  font-family: system-ui,
+  sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.wrapper {
+  max-width: 1080px;
+  margin: 50px auto;
+  background-color: #FFFFFF;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.04);
+  border-radius: 20px;
+}
+
+header {
+  border-bottom: 1px solid #f4f4f4;
+}
+
+.cart {
+  margin-right: 15px;
+}
+
+.content {
+  margin: 0;
+}

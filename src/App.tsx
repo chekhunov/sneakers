@@ -1,12 +1,28 @@
 import React from 'react';
-import {Card, Drawer, Header} from "./components";
+import {Drawer, Header} from "./components";
+import Card from "./components/Card";
 
+// type CardType = {
+//     title: string;
+//     price: number;
+// }
+// @ts-ignore: Unreachable code error
 function App() {
+    const arr = [
+        {
+            title: "Nike",
+            price: 10000,
+            imageUrl: "/img/sneakers/1.jpg",
+        },
+        {
+            title: "Puma",
+            price: 7000,
+            imageUrl: '/img/sneakers/1.jpg',
+        }
+    ];
     return (
         <div className="wrapper clear" >
-
-                <Drawer />
-
+            <Drawer />
             <Header />
             <div className="content p-40" >
                 <div className="d-flex justify-between align-center mb-40" >
@@ -17,7 +33,9 @@ function App() {
                     </div >
                 </div >
                 <div className="d-flex" >
-                    <Card />
+                    {arr.map((obj) => (
+                        <Card title={obj.title} price={obj.price} img={obj.imageUrl} onClick={() => console.log(obj)} />
+                    ))}
                 </div >
             </div >
         </div >

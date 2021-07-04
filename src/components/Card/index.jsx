@@ -1,25 +1,37 @@
 import React from "react";
 import style from './Card.module.scss';
 
-function Card(props) {
-    // const onClickButton = () => {
-    //     alert("fdgdfg")
-    // }
+
+function Card({id, title, img, price, onPlus, onFavorite, favoritedies = false}) {
+
+    const [isAdded, setIsAdded] = React.useState(false);
+    const [isFavorite, setIsFavorite] = React.useState(favoritedies);
+
+    const onClickPlus = () => {
+        onPlus({title, img, price});
+        setIsAdded(!isAdded); //инверсия если тру значит фалс и на оборот
+    }
+    const onClickHeart = () => {
+        onFavorite({id, title, img, price});
+        setIsFavorite(!isFavorite); //инверсия если тру значит фалс и на оборот
+    }
     return (
         <div className={style.card} >
-            <div className={style.favorite} >
-                <img src="/img/heart-liked.svg" alt="liked" />
+            <div className={style.favorite} onClick={onFavorite} >
+                <img onClick={onClickHeart} src={isFavorite ? "/img/heart-liked.svg" : "/img/heart-notliked.svg"}
+                     alt="liked" />
             </div >
-            <img width={133} height={112} src={props.img} alt="sneakers" />
-            <p className={style.text} >{props.title}</p >
+            <img width={133} height={112} src={img} alt="sneakers" />
+            <p className={style.text} >{title}</p >
             <div className="d-flex justify-between align-center" >
                 <div className="d-flex flex-column " >
                     <span >Цена:</span >
-                    <b >{props.price} руб.</b >
+                    <b >{price} руб.</b >
                 </div >
-                <button className={style.button} onClick={props.onClick} >
-                    <img width={11} height={11} src="/img/plus.svg" alt="plus" />
-                </button >
+
+                <img className={style.plus} onClick={onClickPlus}
+                     src={isAdded ? "/img/btncheck.svg" : "/img/btnplus.svg"} alt="plus" />
+
             </div >
         </div >
     )

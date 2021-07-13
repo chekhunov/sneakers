@@ -12,7 +12,6 @@ const App = () => {
   const [favorites, setFavorites] = React.useState([]);
   let [searchValue, setSearchValue] = React.useState('');
   const [cartOpened, setCartOpened] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
 
   // в useeffect нельзя вставлять async и делать асинхронным функции функция должна быт синхронной
   React.useEffect(() => {
@@ -24,24 +23,17 @@ const App = () => {
     //         setItems(json)
     //     })
     async function fetchData() {
-      setIsLoading(true);
+      const itemsResponse = await axios.get('https://60de45f9878c890017fa2e50.mockapi.io/items');
+
       //запрос на корзину
       const cartResponse = await axios.get('https://60de45f9878c890017fa2e50.mockapi.io/cart');
 
-      const favoritesResponse = await axios.get(
-        'https://60de45f9878c890017fa2e50.mockapi.io/favorites',
-      );
-
-      const itemsResponse = await axios.get('https://60de45f9878c890017fa2e50.mockapi.io/items');
-
-      setIsLoading(false);
-
-      setCartItems(cartResponse.data);
-      setFavorites(favoritesResponse.data);
-      setItems(itemsResponse.data);
+      const favoritesResponse = await axios
+        .get('https://60de45f9878c890017fa2e50.mockapi.io/favorites')
+        .then((res) => {
+          setFavorites(res.data);
+        });
     }
-    // и теперь после ее создания вызовим
-    fetchData();
   }, []);
 
   const onAddToCart = (obj) => {
@@ -117,7 +109,6 @@ const App = () => {
           onChangeSearchInput={onChangeSearchInput}
           onAddToFavorite={onAddToFavorite}
           onAddToCart={onAddToCart}
-          isLoading={isLoading}
         />
       </Route>
 

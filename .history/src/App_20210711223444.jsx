@@ -12,9 +12,7 @@ const App = () => {
   const [favorites, setFavorites] = React.useState([]);
   let [searchValue, setSearchValue] = React.useState('');
   const [cartOpened, setCartOpened] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
 
-  // в useeffect нельзя вставлять async и делать асинхронным функции функция должна быт синхронной
   React.useEffect(() => {
     // fetch('https://60de45f9878c890017fa2e50.mockapi.io/items')
     //     .then(res => {
@@ -23,28 +21,19 @@ const App = () => {
     //     .then((json) => {
     //         setItems(json)
     //     })
-    async function fetchData() {
-      setIsLoading(true);
-      //запрос на корзину
-      const cartResponse = await axios.get('https://60de45f9878c890017fa2e50.mockapi.io/cart');
-
-      const favoritesResponse = await axios.get(
-        'https://60de45f9878c890017fa2e50.mockapi.io/favorites',
-      );
-
-      const itemsResponse = await axios.get('https://60de45f9878c890017fa2e50.mockapi.io/items');
-
-      setIsLoading(false);
-
-      setCartItems(cartResponse.data);
-      setFavorites(favoritesResponse.data);
-      setItems(itemsResponse.data);
-    }
-    // и теперь после ее создания вызовим
-    fetchData();
+    axios.get('https://60de45f9878c890017fa2e50.mockapi.io/items').then((res) => {
+      setItems(res.data);
+    });
+    //запрос на корзину
+    axios.get('https://60de45f9878c890017fa2e50.mockapi.io/cart').then((res) => {
+      setCartItems(res.data);
+    });
+    axios.get('https://60de45f9878c890017fa2e50.mockapi.io/favorites').then((res) => {
+      setFavorites(res.data);
+    });
   }, []);
 
-  const onAddToCart = (obj) => {
+  const onAddToCard = (obj) => {
     if (cartItems.find((item) => Number(item.id) === Number(obj.id))) {
       axios.delete(`https://60de45f9878c890017fa2e50.mockapi.io/cart/${obj.id}`);
       setCartItems((prev) => prev.filter((item) => Number(item.id) === Number(obj.id)));
@@ -116,8 +105,7 @@ const App = () => {
           setSearchValue={setSearchValue}
           onChangeSearchInput={onChangeSearchInput}
           onAddToFavorite={onAddToFavorite}
-          onAddToCart={onAddToCart}
-          isLoading={isLoading}
+          onAddToCart={onAddToCard}
         />
       </Route>
 

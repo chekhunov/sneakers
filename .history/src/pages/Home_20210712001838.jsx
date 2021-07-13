@@ -18,21 +18,18 @@ function Home({
     // {
     //   /* some ниде означает если хотябы одно совпало он вернет true */
     // }
-    // если isLoading true создай 10 фейуовых карточек массив если нет отобращи наши
-    return (
-      isLoading
-        ? [...Array(10)]
-        : items.filter((item) => item.title.toLowerCase().includes(searchValue.toLowerCase()))
-    ).map((item, index) => (
-      <Card
-        key={index}
-        onFavorite={(obj) => onAddToFavorite(obj)}
-        onPlus={(obj) => onAddToCart(obj)}
-        added={cartItems.some((obj) => Number(obj.id) === Number(item.id))}
-        isLoading={isLoading}
-        {...item}
-      />
-    ));
+    return items
+      .filter((item) => item.title.toLowerCase().includes(searchValue.toLowerCase()))
+      .map((item, index) => (
+        <Card
+          key={item.id}
+          onFavorite={(obj) => onAddToFavorite(obj)}
+          onPlus={(obj) => onAddToCart(obj)}
+          added={cartItems.some((obj) => Number(obj.id) === Number(item.id))}
+          isLoading={false}
+          {...item}
+        />
+      ));
   };
   return (
     <div className="content p-40">

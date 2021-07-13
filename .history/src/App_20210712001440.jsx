@@ -16,6 +16,7 @@ const App = () => {
 
   // в useeffect нельзя вставлять async и делать асинхронным функции функция должна быт синхронной
   React.useEffect(() => {
+    setIsLoading(true);
     // fetch('https://60de45f9878c890017fa2e50.mockapi.io/items')
     //     .then(res => {
     //         return res.json()
@@ -24,7 +25,6 @@ const App = () => {
     //         setItems(json)
     //     })
     async function fetchData() {
-      setIsLoading(true);
       //запрос на корзину
       const cartResponse = await axios.get('https://60de45f9878c890017fa2e50.mockapi.io/cart');
 
@@ -33,8 +33,6 @@ const App = () => {
       );
 
       const itemsResponse = await axios.get('https://60de45f9878c890017fa2e50.mockapi.io/items');
-
-      setIsLoading(false);
 
       setCartItems(cartResponse.data);
       setFavorites(favoritesResponse.data);

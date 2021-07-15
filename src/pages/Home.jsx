@@ -1,9 +1,9 @@
 import React from 'react';
 import Card from '../components/Card';
 
+
 function Home({
   items,
-  cartItems,
   searchValue,
   setSearchValue,
   onChangeSearchInput,
@@ -11,6 +11,8 @@ function Home({
   onAddToCart,
   isLoading,
 }) {
+
+
   const renderItems = () => {
     // {
     //   /*сортирую список по поиску*/
@@ -28,7 +30,7 @@ function Home({
         key={index}
         onFavorite={(obj) => onAddToFavorite(obj)}
         onPlus={(obj) => onAddToCart(obj)}
-        added={cartItems.some((obj) => Number(obj.id) === Number(item.id))}
+
         isLoading={isLoading}
         {...item}
       />

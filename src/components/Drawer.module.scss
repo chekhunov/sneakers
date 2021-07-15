@@ -1,0 +1,7 @@
+.order {
+  background-color: green;
+  &:disabled {
+    background-color: grey!important;
+    cursor: default;
+  }
+}

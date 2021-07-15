@@ -9,6 +9,7 @@
 - SASS / CSS Modules node-sass@4.14.1
 - react-loading-skeleton
 - axios
+- mockapi.io
 
 # Getting Started with Create React App
 

@@ -1,7 +1,41 @@
 import React from 'react';
 import Info from './Info';
+import AppContext from '../context';
+import axios from 'axios';
+import style from './Drawer.module.scss';
+
+const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
 function Drawer({ onClosed, onRemove, items = [] }) {
+  const {cartItems, setCartItems} = React.useContext(AppContext)
+
+  const[isOrderComplete, setIsOrderComplete] = React.useState(false);
+  const[isLoading, setIsLoading] = React.useState(false);
+  const[orderId, setOrderId] = React.useState(null);
+  const onClickOrder = async () => {
+  try{
+    // перед отправкой заказа сделать тру лоадинеу
+    setIsLoading(true);
+    const {data} = await axios.post('https://60de45f9878c890017fa2e50.mockapi.io/order', {
+      items: cartItems});
+      // сверху я в мокапи передаю обьект а мокапи к нему прикрутит ид
+    //сохраняем ид заказа
+
+    setOrderId(data.id)
+    setIsOrderComplete(true);
+    setCartItems([]);
+
+    for(let i=0; i<cartItems.length; i++){
+      const item = cartItems[i];
+      await axios.delete('https://60de45f9878c890017fa2e50.mockapi.io/cart/' + item.id);
+      await delay(1000);
+    }
+  }catch(error){
+      alert('Не удалось создать заказ')
+  }
+  // после всего загрузку выключаем
+  setIsLoading(false);
+  }
   return (
     <div className="overlay">
       <div className="drawer">
@@ -49,13 +83,13 @@ function Drawer({ onClosed, onRemove, items = [] }) {
                   <b>1074 руб.</b>
                 </li>
               </ul>
-              <button>Оформить заказ</button>
+              <button className={style.order} disabled={isLoading} onClick={onClickOrder}>Оформить заказ</button>
             </div>
           </div>
         ) : (
           <Info
-            title={'Корзина пустая'}
-            description={`Ваш заказ # скоро будет передан курьерской доставке`}
+            title={isOrderComplete ? 'Заказ оформлен!':'Корзина пустая'}
+            description={isOrderComplete ? `Ваш заказ #${orderId} скоро будет передан курьерской доставке`: 'Добавьте товар в корзину'}
             image={'img/empty-cart.jpg'}
           />
         )}

@@ -1,5 +1,8 @@
 import React from 'react';
 import ContentLoader from 'react-content-loader';
+
+import AppContext from '../../context';
+
 import style from './Card.module.scss';
 
 function Card({
@@ -10,15 +13,15 @@ function Card({
   onPlus,
   onFavorite,
   favoritedies = false,
-  added = false,
   isLoading = false,
 }) {
-  const [isAdded, setIsAdded] = React.useState(added);
+  const {isItemAdded} = React.useContext(AppContext);
+
   const [isFavorite, setIsFavorite] = React.useState(favoritedies);
 
   const onClickPlus = () => {
     onPlus({ id, title, img, price });
-    setIsAdded(!isAdded); //инверсия если тру значит фалс и на оборот
+    // setIsAdded(!isAdded); //инверсия если тру значит фалс и на оборот
   };
   const onClickHeart = () => {
     onFavorite({ id, title, img, price });
@@ -61,7 +64,7 @@ function Card({
             <img
               className={style.plus}
               onClick={onClickPlus}
-              src={isAdded ? '/img/btncheck.svg' : '/img/btnplus.svg'}
+              src={isItemAdded(id) ? '/img/btncheck.svg' : '/img/btnplus.svg'}
               alt="plus"
             />
           </div>

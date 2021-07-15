@@ -28,6 +28,7 @@ const App = () => {
     //         setItems(json)
     //     })
     async function fetchData() {
+      //todo сделать try catch + promise.all
       setIsLoading(true);
       //запрос на корзину
       const cartResponse = await axios.get('https://60de45f9878c890017fa2e50.mockapi.io/cart');
@@ -83,12 +84,13 @@ const App = () => {
   //async ассинхронная функция для того чтоб дождаться ответа от сервера и выполнить запрос пост
   const onAddToFavorite = async (obj) => {
     try {
-      if (favorites.find((favObj) => favObj.id === obj.id)) {
+      if (favorites.find((favObj) => Number(favObj.id) === Number(obj.id))) {
         axios.delete(`https://60de45f9878c890017fa2e50.mockapi.io/favorites/${obj.id}`);
         //setFavorites возьми предыдущее значение пройдись по нему отфильтруй все id которые не равны то
         // который я передал по клику
         // setFavorites(prev => prev.filter(item => item.id !== obj.id))
         //если такого ид не будет тогда ниже код создай
+        setFavorites((prev) => prev.filter((item) => Number(item.id) === Number(obj.id)));
       } else {
         //await дождись ответа
         const {data} = await axios.post('https://60de45f9878c890017fa2e50.mockapi.io/favorites', obj,);
@@ -101,6 +103,9 @@ const App = () => {
       alert('не удалось добавиь в корзину');
     }
   };
+const isItemAdded = (id) => {
+  return cartItems.some((obj) => Number(obj.id)===Number(id));
+}
 
   //используем пример контролируемого input когда мы ему задаем value
 
@@ -109,7 +114,7 @@ const App = () => {
     //что в него обернуто сохраняется и мониториться и все компоненты внутри знают о нем
     // все что мы вложили в value будет доступно обернутым компонентам
     //эти значения из конст вверху
-    <AppContext.Provider value={{ items,cartItems,favorites }}>
+    <AppContext.Provider value={{ items,cartItems,favorites, isItemAdded,setCartOpened, setCartItems }}>
     <div className="wrapper clear">
     {cartOpened && (<Drawer items={cartItems} onClosed={() => setCartOpened(false)} onRemove={onRemoveItem}/>)}
     {/* тернарный оператор если будет тру то появить ся корзина */}
